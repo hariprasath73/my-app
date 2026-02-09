@@ -1,37 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hey Thangameyyyy ❤️</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey Thangameyyyy ❤️</title>
 
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg,#ff1e3c,#ff4d6d);
-      font-family: Arial, sans-serif;
-      color: white;
-      overflow: hidden;
-    }
-    .container { text-align: center; }
-    button {
-      padding: 14px 28px;
-      font-size: 20px;
-      border-radius: 30px;
-      border: none;
-      margin: 15px;
-      cursor: pointer;
-    }
-    #yesBtn { background: white; color: #ff1e3c; }
-    #noBtn  { background: #900; color: white; position: absolute; }
-  </style>
+<style>
+body{
+  margin:0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg,#ff1e3c,#ff4d6d);
+  height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  color:white;
+}
+
+.container{
+  text-align:center;
+  padding:20px;
+}
+
+h1{ font-size:42px; }
+p{ font-size:26px; }
+
+button{
+  padding:14px 28px;
+  font-size:20px;
+  border:none;
+  border-radius:30px;
+  margin:15px;
+  cursor:pointer;
+}
+
+#yesBtn{ background:white; color:#ff1e3c; }
+#noBtn{ background:#900; color:white; position:absolute; }
+
+#finalScreen{ display:none; }
+#giftSection{ display:none; margin-top:20px; }
+
+.giftBtn{
+  background:white;
+  color:#ff1e3c;
+  display:block;
+  width:200px;
+  margin:12px auto;
+}
+
+.messageBox{
+  margin-top:20px;
+  font-size:22px;
+  background:rgba(255,255,255,0.2);
+  padding:15px;
+  border-radius:15px;
+}
+</style>
 </head>
 
 <body>
+
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_c8b63c7d9c.mp3?filename=romantic-love-11786.mp3" type="audio/mpeg">
+</audio>
 
 <div class="container" id="mainScreen">
   <h1>Hey Thangameyyyy ❤️</h1>
@@ -40,24 +72,67 @@
   <button id="noBtn">No</button>
 </div>
 
+<div class="container" id="finalScreen">
+  <h1>Yay! You made my day 💖</h1>
+
+  <div id="giftSection">
+    <p>Choose your gift 🎁</p>
+    <button class="giftBtn" data-gift="1">Gift 1 🎁</button>
+    <button class="giftBtn" data-gift="2">Gift 2 🎁</button>
+    <button class="giftBtn" data-gift="3">Gift 3 🎁</button>
+
+    <div id="messageBox" class="messageBox"></div>
+  </div>
+</div>
+
 <script>
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
+
   const yesBtn = document.getElementById("yesBtn");
-  const noBtn  = document.getElementById("noBtn");
+  const noBtn = document.getElementById("noBtn");
+  const mainScreen = document.getElementById("mainScreen");
+  const finalScreen = document.getElementById("finalScreen");
+  const giftSection = document.getElementById("giftSection");
+  const messageBox = document.getElementById("messageBox");
+  const bgMusic = document.getElementById("bgMusic");
 
-  console.log("Buttons:", yesBtn, noBtn);
-
+  // No button runs away 😄
   noBtn.addEventListener("mouseover", () => {
-    noBtn.style.left = Math.random() * 300 + "px";
-    noBtn.style.top  = Math.random() * 300 + "px";
+    noBtn.style.left = Math.random() * (window.innerWidth - 120) + "px";
+    noBtn.style.top  = Math.random() * (window.innerHeight - 60) + "px";
   });
 
+  // Yes button flow ❤️
   yesBtn.addEventListener("click", () => {
-    document.body.innerHTML =
-      "<h1 style='color:white;text-align:center;'>Yay! You said YES 💖</h1>";
+    mainScreen.style.display = "none";
+    finalScreen.style.display = "block";
+    giftSection.style.display = "block";
+    bgMusic.play().catch(() => {});
   });
+
+  // Gift messages
+  document.querySelectorAll(".giftBtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const gift = btn.dataset.gift;
+
+      if (gift === "1") {
+        messageBox.innerHTML =
+          "You became my favorite thought without even trying.<br>Your smile makes everything lighter.<br>My heart notices you ❤️";
+      }
+      if (gift === "2") {
+        messageBox.innerHTML =
+          "If Valentine’s Day had a face, it would look a lot like you.<br>Calm, charming, and impossible to ignore 💖";
+      }
+      if (gift === "3") {
+        messageBox.innerHTML =
+          "You have this quiet magic that pulls me in.<br>One look from you changes my whole mood 🌹";
+      }
+    });
+  });
+
 });
 </script>
 
 </body>
 </html>
+
